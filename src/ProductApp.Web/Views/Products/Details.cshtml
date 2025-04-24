@@ -1,0 +1,84 @@
+@model ProductApp.Domain.Product
+
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<h2 class="text-center mb-4">@ViewData["Title"]</h2>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg border-0">
+                <div class="card-body">
+                    <!-- Product Details -->
+                    <dl class="row">
+                        <!-- Product Name -->
+                        <dt class="col-sm-4 fw-bold">Product Name</dt>
+                        <dd class="col-sm-8">@Model.Name</dd>
+
+                        <!-- Description -->
+                        <dt class="col-sm-4 fw-bold">Description</dt>
+                        <dd class="col-sm-8">@Model.Description</dd>
+
+                        <!-- Price -->
+                        <dt class="col-sm-4 fw-bold">Price</dt>
+                        <dd class="col-sm-8">@Model.Price.ToString("C")</dd>
+
+                        <!-- Status -->
+                        <dt class="col-sm-4 fw-bold">Status</dt>
+                        <dd class="col-sm-8">@Model.Status</dd>
+
+                        <!-- Category -->
+                        <dt class="col-sm-4 fw-bold">Category</dt>
+                        <dd class="col-sm-8">@Model.Category</dd>
+
+                        <!-- Quantity -->
+                        <dt class="col-sm-4 fw-bold">Quantity</dt>
+                        <dd class="col-sm-8">@Model.Quantity</dd>
+
+                        <!-- Created Date -->
+                        <dt class="col-sm-4 fw-bold">Created</dt>
+                        <dd class="col-sm-8">@Model.CreatedDate.ToString("yyyy-MM-dd HH:mm:ss")</dd>
+
+                        <!-- Last Changed -->
+                        <dt class="col-sm-4 fw-bold">Last Changed</dt>
+                        <dd class="col-sm-8">
+                            @(Model.UpdatedDate.HasValue ? Model.UpdatedDate.Value.ToString("yyyy-MM-dd HH:mm:ss") : "N/A")
+                        </dd>
+                    </dl>
+
+                    <!-- Action Buttons with Icons -->
+                    <div class="d-flex justify-content-between">
+                        <a href="@Url.Action("Edit", "Products", new { id = Model.Id })" class="btn btn-warning btn-sm">
+                            <i class="fas fa-edit"></i> Edit
+                        </a>
+
+                        <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" 
+                                data-product-id="@Model.Id" data-product-name="@Model.Name">
+                            <i class="fas fa-trash-alt"></i> Delete
+                        </button>
+
+                        <a href="@Url.Action("Index", "Products")" class="btn btn-secondary btn-sm">
+                            <i class="fas fa-arrow-left"></i> Back to Product List
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("_DeleteModal", new ProductApp.Domain.Product())
+
+<script>
+    $('#deleteModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var productId = button.data('product-id');
+        var productName = button.data('product-name');
+
+        var modal = $(this);
+        modal.find('.modal-body p').text('Are you sure you want to delete the product "' + productName + '"?');
+        modal.find('#productId').val(productId);
+    });
+</script>
