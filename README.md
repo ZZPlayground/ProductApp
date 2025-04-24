@@ -111,6 +111,7 @@ Ensure the test project is set up to reference the main project, and that all ne
 - Bootstrap for UI design.
 
 ## Project Structure
+```
 ProductApp/
 │
 ├── ProductApp.Web/                # Presentation Layer (UI/Controllers)
@@ -147,3 +148,4 @@ ProductApp/
 │   └── BaseEntity.cs
 │
 └── ProductApp.sln                  # Solution file
+```
