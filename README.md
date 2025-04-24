@@ -109,3 +109,41 @@ Ensure the test project is set up to reference the main project, and that all ne
 - ASP.NET Core 9 for web development.
 - xUnit and Moq for unit testing and mocking dependencies.
 - Bootstrap for UI design.
+
+## Project Structure
+ProductApp/
+│
+├── ProductApp.Web/                # Presentation Layer (UI/Controllers)
+│   ├── Controllers/
+│   │   └── ProductsController.cs
+│   ├── Views/
+│   │   └── Products/
+│   │       ├── Index.cshtml
+│   │       ├── Create.cshtml
+│   │       ├── Edit.cshtml
+│   │       └── Delete.cshtml
+│   └── wwwroot/
+│       └── css/
+│       └── js/
+│
+├── ProductApp.Application/         # Application Layer
+│   ├── Interfaces/
+│   │   └── IProductService.cs
+│   └── Services/
+│       └── ProductService.cs
+│
+├── ProductApp.Domain/              # Domain Layer
+│   └── Product.cs
+│
+├── ProductApp.Infrastructure/      # Data Access Layer
+│   ├── Data/
+│   │   ├── DapperContext.cs
+│   │   ├── IProductRepository.cs
+│   │   └── ProductRepository.cs
+│   └── Configuration/
+│       └── DatabaseConfig.cs
+│ 
+│ ── ProductApp.Utilities/              # Shared Layer
+│   └── BaseEntity.cs
+│
+└── ProductApp.sln                  # Solution file
