@@ -1,0 +1,72 @@
+@model IEnumerable<ProductApp.Domain.Product>
+
+@{
+    ViewData["Title"] = "Product List";
+}
+
+<div class="container py-4">
+    <div class="text-center mb-4">
+        <h2 class="display-6 text-primary border-bottom pb-2">📦 @ViewData["Title"]</h2>
+    </div>
+
+    <div class="d-flex justify-content-end mb-3">
+        <a href="/Products/Create" class="btn btn-outline-primary">
+            <i class="fas fa-plus-circle"></i> Add New Product
+        </a>
+    </div>
+
+    <div class="table-responsive rounded shadow-sm">
+        <table class="table table-bordered table-hover align-middle bg-white">
+            <thead class="table-light">
+                <tr class="text-center">
+                    <th style="width: 5%;">SN</th>
+                    <th style="width: 20%;">Product</th>
+                    <th>Description</th>
+                    <th style="width: 20%;">Created</th>
+                    <th style="width: 20%;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Select((value, index) => new { value, index }))
+                {
+                    <tr>
+                        <td class="text-center fw-bold">@(item.index + 1)</td>
+                        <td>@item.value.Name</td>
+                        <td>@item.value.Description</td>
+                        <td class="text-muted">@item.value.CreatedDate.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                        <td class="text-center">
+                            <a href="/Products/Details/@item.value.Id" class="btn btn-outline-info btn-sm me-1" title="Details">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <a href="/Products/Edit/@item.value.Id" class="btn btn-outline-warning btn-sm me-1" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <button class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal"
+                                    data-product-id="@item.value.Id" data-product-name="@item.value.Name">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @await Html.PartialAsync("_DeleteModal", new ProductApp.Domain.Product())
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#deleteModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var productId = button.data('product-id');
+                var productName = button.data('product-name');
+
+                var modal = $(this);
+                modal.find('.modal-body p').text('Are you sure you want to delete the product "' + productName + '"?');
+                modal.find('#productId').val(productId);
+            });
+        });
+    </script>
+}

@@ -1,0 +1,81 @@
+@model ProductApp.Domain.Product
+
+@{
+    ViewData["Title"] = "Edit Product";
+}
+
+<h1 class="text-center mb-4">@ViewData["Title"]</h1>
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <form asp-action="Edit" method="post">
+            <div class="card shadow-lg border-0">
+                <div class="card-body">
+                    <!-- Product Name -->
+                    <div class="form-group mb-3">
+                        <label for="Name" class="form-label">Product Name</label>
+                        <input type="text" class="form-control" id="Name" name="Name" value="@Model.Name" required />
+                        <div class="invalid-feedback">Product name is required.</div>
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <!-- Product Description -->
+                    <div class="form-group mb-3">
+                        <label for="Description" class="form-label">Product Description</label>
+                        <textarea class="form-control" id="Description" name="Description" required>@Model.Description</textarea>
+                        <div class="invalid-feedback">Product description is required.</div>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+
+                    <!-- Product Price -->
+                    <div class="form-group mb-3">
+                        <label for="Price" class="form-label">Price</label>
+                        <input type="number" class="form-control" id="Price" name="Price" value="@Model.Price" step="0.01" required />
+                        <div class="invalid-feedback">Price must be greater than zero.</div>
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+
+                    <!-- Status Dropdown -->
+                    <div class="form-group mb-3">
+                        <label asp-for="Status" class="form-label">Status</label>
+                        <select asp-for="Status" class="form-select" asp-items="ViewBag.StatusList">
+                            <option value="">-- Select Status --</option>
+                        </select>
+                        <div class="invalid-feedback">Please select a status.</div>
+                        <span asp-validation-for="Status" class="text-danger"></span>
+                    </div>
+
+                    <!-- Category Dropdown -->
+                    <div class="form-group mb-3">
+                        <label asp-for="Category" class="form-label">Category</label>
+                        <select asp-for="Category" class="form-select" asp-items="ViewBag.CategoryList">
+                            <option value="">-- Select Category --</option>
+                        </select>
+                        <div class="invalid-feedback">Please select a category.</div>
+                        <span asp-validation-for="Category" class="text-danger"></span>
+                    </div>
+
+                    <!-- Quantity -->
+                    <div class="form-group mb-3">
+                        <label for="Quantity" class="form-label">Quantity</label>
+                        <input type="number" class="form-control" id="Quantity" name="Quantity" value="@Model.Quantity" required />
+                        <div class="invalid-feedback">Quantity must be greater than or equal to zero.</div>
+                        <span asp-validation-for="Quantity" class="text-danger"></span>
+                    </div>
+
+                    <!-- Submit and Cancel buttons -->
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-success">Update Product</button>
+                        <a href="@Url.Action("Index", "Products")" class="btn btn-secondary">Back to Product List</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{ 
+        await Html.RenderPartialAsync("_ValidationScriptsPartial"); 
+    }
+}
