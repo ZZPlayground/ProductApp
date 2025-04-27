@@ -137,12 +137,11 @@ ProductApp/
 │   └── Product.cs
 │
 ├── ProductApp.Infrastructure/      # Data Access Layer
-│   ├── Data/
-│   │   ├── DapperContext.cs
-│   │   ├── IProductRepository.cs
+│   ├── Interfaces/
+│   │   └── IProductRepository.cs
+│   ├── Repositories/
 │   │   └── ProductRepository.cs
-│   └── Configuration/
-│       └── DatabaseConfig.cs
+│   └── DapperContext.cs
 │ 
 │ ── ProductApp.Utilities/              # Shared Layer
 │   └── BaseEntity.cs
